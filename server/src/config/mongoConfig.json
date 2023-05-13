@@ -1,6 +1,6 @@
 {
   "development": {
-    "database": "shm-chat",
+    "database": "squadhelp-chat-pe2022-1-dev",
     "host": "localhost",
     "port": 27017
   },
