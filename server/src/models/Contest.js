@@ -90,5 +90,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  Contest.associate = function (models) {
+    Contest.belongsTo(models.Users, { foreignKey: 'userId' });
+    Contest.belongsTo(models.Offers, { foreignKey: 'contestId' });
+  };
+
   return Contest;
 };
