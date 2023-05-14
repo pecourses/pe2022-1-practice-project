@@ -125,7 +125,7 @@ module.exports.payment = async (req, res, next) => {
     await bankQueries.updateBankBalance(
       {
         balance: bd.sequelize.literal(`
-                CASE
+          CASE
             WHEN "cardNumber"='${req.body.number.replace(
               / /g,
               ''
