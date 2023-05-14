@@ -11,7 +11,7 @@ const contestsRouter = require('./contestRouter');
 const router = express.Router();
 
 // post('', body)
-// get('.../parems&query')
+// get('.../params&query')
 // patch/put('.../params', body)
 // delete('.../params')
 
@@ -67,12 +67,13 @@ router.post(
 //   contestController.getCustomersContests
 // );
 
-router.get(
-  '/getContestById',
-  checkToken.checkToken,
-  basicMiddlewares.canGetContest,
-  contestController.getContestById
-);
+// GET /contests/:contestId
+// router.get(
+//   '/getContestById',
+//   checkToken.checkToken,
+//   basicMiddlewares.canGetContest,
+//   contestController.getContestById
+// );
 
 // GET /contests...
 router.post(
