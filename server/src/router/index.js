@@ -52,17 +52,20 @@ router.use('/contests', contestsRouter);
 //   userController.payment
 // );
 
+// GET /contests/types&characteristic1=...&characteristic2=...
 router.post(
   '/dataForContest',
   checkToken.checkToken,
   contestController.dataForContest
 );
 
-router.post(
-  '/getCustomersContests',
-  checkToken.checkToken,
-  contestController.getCustomersContests
-);
+// GET //user/id/contests
+// GET //contests/byCustomer
+// router.post(
+//   '/getCustomersContests',
+//   checkToken.checkToken,
+//   contestController.getCustomersContests
+// );
 
 router.get(
   '/getContestById',
@@ -71,6 +74,7 @@ router.get(
   contestController.getContestById
 );
 
+// GET /contests...
 router.post(
   '/getAllContests',
   checkToken.checkToken,
