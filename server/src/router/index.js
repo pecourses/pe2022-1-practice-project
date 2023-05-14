@@ -15,6 +15,10 @@ const router = express.Router();
 // patch/put('.../params', body)
 // delete('.../params')
 
+// PUBLIC ENDPOINT
+// GET offers?limit=10&offset=0
+router.get('/offers', contestController.getAllOffers);
+
 // auth
 
 router.post(

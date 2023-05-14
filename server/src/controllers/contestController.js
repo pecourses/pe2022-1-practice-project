@@ -252,7 +252,6 @@ module.exports.setOfferStatus = async (req, res, next) => {
 };
 
 module.exports.getCustomersContests = (req, res, next) => {
-  console.log('req.query :>> ', req.query);
   db.Contests.findAll({
     where: { status: req.query.contestStatus, userId: req.tokenData.userId },
     limit: req.query.limit,
@@ -313,4 +312,21 @@ module.exports.getContests = (req, res, next) => {
     .catch(err => {
       next(new ServerError());
     });
+};
+
+module.exports.getAllOffers = async (req, res, next) => {
+  const {
+    query: { limit = 10, offset = 0 },
+  } = req;
+
+  try {
+    const foundOffers = await db.Offers.findAll(
+      { limit, offset },
+      { raw: true }
+    );
+
+    res.status(200).send(foundOffers);
+  } catch (err) {
+    next(new ServerError());
+  }
 };
