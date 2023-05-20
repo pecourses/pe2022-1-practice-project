@@ -120,20 +120,21 @@ module.exports.changeMark = async (req, res, next) => {
 
 module.exports.payment = async (req, res, next) => {
   let transaction;
+
+  // ToDo Destructuring
   try {
     transaction = await bd.sequelize.transaction();
     await bankQueries.updateBankBalance(
       {
         balance: bd.sequelize.literal(`
           CASE
-            WHEN "cardNumber"='${req.body.number.replace(
-              / /g,
-              ''
-            )}' AND "cvc"='${req.body.cvc}' AND "expiry"='${req.body.expiry}'
+            WHEN "cardNumber"='${req.body.number.replace(/ /g, '')}' 
+              AND "cvc"='${req.body.cvc}' 
+              AND "expiry"='${req.body.expiry}'
                 THEN "balance"-${req.body.price}
-            WHEN "cardNumber"='${CONSTANTS.SQUADHELP_BANK_NUMBER}' AND "cvc"='${
-          CONSTANTS.SQUADHELP_BANK_CVC
-        }' AND "expiry"='${CONSTANTS.SQUADHELP_BANK_EXPIRY}'
+            WHEN "cardNumber"='${CONSTANTS.SQUADHELP_BANK_NUMBER}' 
+              AND "cvc"='${CONSTANTS.SQUADHELP_BANK_CVC}' 
+              AND "expiry"='${CONSTANTS.SQUADHELP_BANK_EXPIRY}'
                 THEN "balance"+${req.body.price} END
         `),
       },
@@ -162,8 +163,19 @@ module.exports.payment = async (req, res, next) => {
         prize,
       });
     });
-    await bd.Contests.bulkCreate(req.body.contests, transaction);
+    await bd.Contests.bulkCreate(req.body.contests, { transaction });
+
+    // ToDo "EXPENSE" to constants
+    const newTransaction = {
+      amount: req.body.price,
+      operationType: 'EXPENSE',
+      userId: req.tokenData.userId,
+    };
+
+    await bd.Transactions.create(newTransaction, { transaction });
+
     transaction.commit();
+
     res.send();
   } catch (err) {
     transaction.rollback();
