@@ -41,6 +41,12 @@ router.post(
   userController.updateUser
 );
 
+router.get(
+  'users/id/transactions',
+  checkToken.checkToken,
+  userController.getTransactions
+);
+
 // contests
 
 router.use('/contests', contestsRouter);
