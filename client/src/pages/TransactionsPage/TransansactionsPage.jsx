@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
+import { connect } from 'react-redux';
+import { getTransactions } from '../../store/slices/transactionsSlice';
 
-function TransansactionsPage () {
-  const transactions = [
-    { amount: 10, operationType: 'INCOME', date: '2023-01-01' },
-    { amount: 10, operationType: 'INCOME', date: '2023-01-01' },
-  ];
+function TransansactionsPage ({ transactions, isFetching, error, get }) {
+  useEffect(() => {
+    get();
+  }, []);
 
   return (
     <div>
@@ -26,7 +27,7 @@ function TransansactionsPage () {
               <tr key={t.id}>
                 <td>{t.amount}</td>
                 <td>{t.operationType}</td>
-                <td>{t.date}</td>
+                <td>{t.createdAt}</td>
               </tr>
             ))}
           </tbody>
@@ -36,4 +37,13 @@ function TransansactionsPage () {
   );
 }
 
-export default TransansactionsPage;
+const mapStateToProps = ({ transactionsStore }) => transactionsStore;
+
+const mapDispatchToProps = dispatch => ({
+  get: () => dispatch(getTransactions()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransansactionsPage);

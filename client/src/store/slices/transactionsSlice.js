@@ -6,7 +6,7 @@ const TRANSACTIONS_SLICE_NAME = 'transactions';
 const initialState = {
   transactions: [],
   isFetching: false,
-  errror: null,
+  error: null,
 };
 
 export const getTransactions = createAsyncThunk(
@@ -43,6 +43,6 @@ const transactionsSlice = createSlice({
   },
 });
 
-const {reducer} = transactionsSlice;
+const { reducer } = transactionsSlice;
 
 export default reducer;

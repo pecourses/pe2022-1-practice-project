@@ -42,7 +42,7 @@ router.post(
 );
 
 router.get(
-  'users/id/transactions',
+  '/users/id/transactions',
   checkToken.checkToken,
   userController.getTransactions
 );
