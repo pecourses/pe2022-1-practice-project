@@ -13,25 +13,29 @@ function TransansactionsPage ({ transactions, isFetching, error, get }) {
       <Header />
       <main>
         TransansactionsPage
-        <table>
-          <caption>Finance Operations</caption>
-          <thead>
-            <tr>
-              <th key={1}>Amount</th>
-              <th key={2}>Operation Type</th>
-              <th key={3}>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map(t => (
-              <tr key={t.id}>
-                <td>{t.amount}</td>
-                <td>{t.operationType}</td>
-                <td>{t.createdAt}</td>
+        {error && <div>Error</div>}
+        {isFetching && <div>Loading...</div>}
+        {!isFetching && !error && (
+          <table>
+            <caption>Finance Operations</caption>
+            <thead>
+              <tr>
+                <th key={1}>Amount</th>
+                <th key={2}>Operation Type</th>
+                <th key={3}>Date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {transactions.map(t => (
+                <tr key={t.id}>
+                  <td>{t.amount}</td>
+                  <td>{t.operationType}</td>
+                  <td>{t.createdAt}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </main>
     </div>
   );
