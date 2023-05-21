@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from '@reduxjs/toolkit';
 import { getTransactions } from '../../store/slices/transactionsSlice';
 
-function TransansactionsPage ({ transactions, isFetching, error, get }) {
+function TransansactionsPage () {
+  // ! In all app must be unified code style
+  const { transactions, isFetching, error } = useSelector(
+    ({ transactionsStore }) => transactionsStore
+  );
+
+  const dispatch = useDispatch();
+
+  const { get } = bindActionCreators({ get: getTransactions }, dispatch);
+
   useEffect(() => {
     get();
   }, []);
@@ -41,13 +51,4 @@ function TransansactionsPage ({ transactions, isFetching, error, get }) {
   );
 }
 
-const mapStateToProps = ({ transactionsStore }) => transactionsStore;
-
-const mapDispatchToProps = dispatch => ({
-  get: () => dispatch(getTransactions()),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TransansactionsPage);
+export default TransansactionsPage;
